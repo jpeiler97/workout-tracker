@@ -2,13 +2,14 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ExerciseSchema = new Schema({
+	type: {
+		type: String
+	},
 	name: {
 		type: String,
 		unique: true
 	},
-	type: {
-		type: String
-	},
+
 	weight: { type: Number },
 	sets: { type: Number },
 	reps: { type: Number },

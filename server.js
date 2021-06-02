@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 
 const PORT = process.env.PORT || 3001;
 
-//Uncomment after adding models
 const db = require('./models');
 
 const app = express();
@@ -16,8 +15,29 @@ app.use(express.json());
 
 app.use(express.static('public'));
 
-//Uncomment after adding models models
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', { useNewUrlParser: true });
+
+app.get('/workouts', (req, res) => {
+	db.Workout
+		.find({})
+		.then((dbWorkout) => {
+			res.json(dbWorkout);
+		})
+		.catch((err) => {
+			res.json(err);
+		});
+});
+
+app.get('/exercises', (req, res) => {
+	db.Exercise
+		.find({})
+		.then((dbExercise) => {
+			res.json(dbExercise);
+		})
+		.catch((err) => {
+			res.json(err);
+		});
+});
 
 app.listen(PORT, () => {
 	console.log(`Listening on port ${PORT}`);
