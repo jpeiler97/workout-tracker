@@ -17,7 +17,7 @@ app.use(express.static('public'));
 
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/workout', { useNewUrlParser: true });
 
-app.get('/workouts', (req, res) => {
+app.get('/api/workouts', (req, res) => {
 	db.Workout
 		.find({})
 		.then((dbWorkout) => {
@@ -28,11 +28,11 @@ app.get('/workouts', (req, res) => {
 		});
 });
 
-app.get('/exercises', (req, res) => {
-	db.Exercise
-		.find({})
-		.then((dbExercise) => {
-			res.json(dbExercise);
+app.post('/api/workouts/:id', ({ body }) => {
+	const workout = new Workout(body);
+	Workout.create(workout)
+		.then((dbWorkout) => {
+			res.json(dbWorkout);
 		})
 		.catch((err) => {
 			res.json(err);
